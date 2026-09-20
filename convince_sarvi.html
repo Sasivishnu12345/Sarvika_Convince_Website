@@ -1,0 +1,676 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Can We Start Again? ❤️</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            min-height: 100vh;
+            overflow: hidden;
+            font-family: Georgia, "Times New Roman", serif;
+            color: white;
+            background:
+                radial-gradient(circle at 50% 30%, #571d38 0%, #220914 45%, #080208 100%);
+        }
+
+        /* Background */
+        canvas {
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+        }
+
+        /* Main container */
+        .container {
+            position: relative;
+            z-index: 2;
+            min-height: 100vh;
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            padding: 20px;
+        }
+
+        /* Card */
+        .card {
+            width: min(700px, 95vw);
+
+            padding: 45px 32px;
+
+            text-align: center;
+
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+
+            backdrop-filter: blur(18px);
+
+            border-radius: 30px;
+
+            box-shadow:
+                0 25px 80px rgba(0, 0, 0, 0.5),
+                0 0 60px rgba(255, 50, 120, 0.12);
+
+            animation: cardEnter 1.2s ease;
+        }
+
+        /* Heart */
+        .heart {
+            font-size: 58px;
+            margin-bottom: 15px;
+
+            animation: heartbeat 1.5s infinite;
+        }
+
+        /* Heading */
+        h1 {
+            font-size: clamp(38px, 7vw, 65px);
+            line-height: 1.1;
+            margin-bottom: 18px;
+        }
+
+        h1 span {
+            color: #ff719e;
+        }
+
+        /* Subtitle */
+        .subtitle {
+            max-width: 580px;
+            margin: auto;
+
+            font-size: 18px;
+            line-height: 1.7;
+
+            color: #f5cedb;
+        }
+
+        /* Message */
+        .message {
+            margin: 30px auto;
+
+            padding: 25px;
+
+            max-width: 600px;
+
+            border-radius: 20px;
+
+            background: rgba(255, 255, 255, 0.055);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+
+            color: #f9e5ec;
+
+            line-height: 1.8;
+            font-size: 16px;
+        }
+
+        .message strong {
+            color: #ff9ab8;
+        }
+
+        /* Question */
+        .question {
+            font-size: 26px;
+            font-weight: bold;
+
+            margin: 25px 0;
+        }
+
+        /* Buttons */
+        .buttons {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        button {
+            border: none;
+
+            padding: 15px 28px;
+
+            border-radius: 50px;
+
+            font-size: 16px;
+            font-weight: bold;
+
+            cursor: pointer;
+
+            transition: 0.3s;
+        }
+
+        /* Yes button */
+        .yes {
+            color: white;
+
+            background: linear-gradient(
+                135deg,
+                #ff477e,
+                #ff789f
+            );
+
+            box-shadow:
+                0 10px 30px rgba(255, 71, 126, 0.3);
+        }
+
+        .yes:hover {
+            transform: translateY(-4px) scale(1.04);
+
+            box-shadow:
+                0 15px 40px rgba(255, 71, 126, 0.5);
+        }
+
+        /* Maybe button */
+        .maybe {
+            color: white;
+
+            background: rgba(255, 255, 255, 0.1);
+
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .maybe:hover {
+            background: rgba(255, 255, 255, 0.18);
+        }
+
+        /* Small note */
+        .note {
+            margin-top: 20px;
+
+            font-size: 12px;
+
+            color: #c9a2b0;
+        }
+
+        /* Success screen */
+        .success h2 {
+            font-size: 38px;
+            margin-bottom: 20px;
+
+            color: #ff91b3;
+        }
+
+        .success p {
+            color: #f7dbe5;
+
+            font-size: 17px;
+            line-height: 1.9;
+        }
+
+        .success strong {
+            color: #ff9ab8;
+        }
+
+        .restart {
+            margin-top: 25px;
+        }
+
+        /* Animations */
+        @keyframes heartbeat {
+
+            0% {
+                transform: scale(1);
+            }
+
+            50% {
+                transform: scale(1.15);
+            }
+
+            100% {
+                transform: scale(1);
+            }
+        }
+
+        @keyframes cardEnter {
+
+            from {
+                opacity: 0;
+                transform: translateY(30px) scale(0.97);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        @keyframes fade {
+
+            from {
+                opacity: 0;
+                transform: translateY(15px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Mobile */
+        @media (max-width: 600px) {
+
+            .card {
+                padding: 35px 20px;
+            }
+
+            .subtitle {
+                font-size: 16px;
+            }
+
+            .message {
+                font-size: 15px;
+                padding: 20px;
+            }
+
+            .question {
+                font-size: 22px;
+            }
+
+            button {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <canvas id="stars"></canvas>
+
+    <div class="container">
+
+        <div class="card" id="card">
+
+            <div class="heart">
+                ❤️
+            </div>
+
+            <h1>
+                Can we <span>start again?</span>
+            </h1>
+
+            <p class="subtitle">
+                I don't want to pretend that everything was perfect.
+                I just know that what we had means too much to me
+                to leave it unfinished.
+            </p>
+
+
+            <div class="message">
+
+                I know I've made mistakes.
+
+                Maybe I've said things I shouldn't have,
+                maybe I didn't show you enough how much
+                you mean to me.
+
+                <br><br>
+
+                I'm not asking you to forget everything
+                overnight.
+
+                I'm only asking for one more chance —
+                not to go back to the past,
+                but to build something better from here.
+
+                <br><br>
+
+                <strong>
+                    If you still have even a tiny place
+                    for me in your heart,
+                    can we take one small step together?
+                </strong>
+
+            </div>
+
+
+            <div class="question">
+                Can we start again? 🥺❤️
+            </div>
+
+
+            <div class="buttons">
+
+                <button
+                    class="yes"
+                    onclick="yesClicked()">
+
+                    Yes, let's try again ❤️
+
+                </button>
+
+
+                <button
+                    class="maybe"
+                    id="maybeButton"
+                    onclick="maybeClicked()">
+
+                    I need a little time
+
+                </button>
+
+            </div>
+
+
+            <div class="note">
+
+                No pressure.
+                Whatever you choose,
+                I'll respect your feelings. ❤️
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <script>
+
+        /* =========================
+           BACKGROUND STARS
+        ========================= */
+
+        const canvas = document.getElementById("stars");
+
+        const ctx = canvas.getContext("2d");
+
+        let width;
+        let height;
+
+        let particles = [];
+
+
+        function resizeCanvas() {
+
+            width = canvas.width = window.innerWidth;
+
+            height = canvas.height = window.innerHeight;
+
+
+            particles = [];
+
+            for (let i = 0; i < 80; i++) {
+
+                particles.push({
+
+                    x: Math.random() * width,
+
+                    y: Math.random() * height,
+
+                    radius: Math.random() * 1.8 + 0.3,
+
+                    speed: Math.random() * 0.4 + 0.1
+
+                });
+
+            }
+
+        }
+
+
+        resizeCanvas();
+
+
+        window.addEventListener(
+            "resize",
+            resizeCanvas
+        );
+
+
+        function drawStars() {
+
+            ctx.clearRect(
+                0,
+                0,
+                width,
+                height
+            );
+
+
+            particles.forEach(star => {
+
+                star.y -= star.speed;
+
+
+                if (star.y < 0) {
+
+                    star.y = height;
+
+                }
+
+
+                ctx.globalAlpha =
+                    0.25 + Math.random() * 0.5;
+
+
+                ctx.fillStyle = "white";
+
+
+                ctx.beginPath();
+
+                ctx.arc(
+                    star.x,
+                    star.y,
+                    star.radius,
+                    0,
+                    Math.PI * 2
+                );
+
+                ctx.fill();
+
+            });
+
+
+            requestAnimationFrame(drawStars);
+
+        }
+
+
+        drawStars();
+
+
+        /* =========================
+           YES BUTTON
+        ========================= */
+
+        function yesClicked() {
+
+            const card =
+                document.getElementById("card");
+
+
+            card.innerHTML = `
+
+                <div class="heart">
+                    💗
+                </div>
+
+                <div class="success">
+
+                    <h2>
+                        Then let's start again. ❤️
+                    </h2>
+
+                    <p>
+
+                        No promises that everything
+                        will be perfect.
+
+                        <br>
+
+                        Just a promise that I'll listen more,
+                        understand more,
+                        communicate better,
+                        and never take what we have
+                        for granted.
+
+                        <br><br>
+
+                        We don't have to fix everything
+                        in one day.
+
+                        <br>
+
+                        One conversation.
+                        One fresh start.
+                        One step at a time.
+
+                        <br><br>
+
+                        <strong>
+                            Thank you for giving
+                            us another chance. ❤️
+                        </strong>
+
+                    </p>
+
+
+                    <button
+                        class="yes restart"
+                        onclick="location.reload()">
+
+                        Read it again ✨
+
+                    </button>
+
+                </div>
+
+            `;
+
+
+            createHeartExplosion();
+
+        }
+
+
+        /* =========================
+           MAYBE BUTTON
+        ========================= */
+
+        let clickCount = 0;
+
+
+        function maybeClicked() {
+
+            const button =
+                document.getElementById(
+                    "maybeButton"
+                );
+
+
+            clickCount++;
+
+
+            const messages = [
+
+                "I understand ❤️",
+
+                "Take your time 🌷",
+
+                "I'll wait… ❤️",
+
+                "Whenever you're ready 🫶"
+
+            ];
+
+
+            button.innerText =
+                messages[
+                    Math.min(
+                        clickCount - 1,
+                        messages.length - 1
+                    )
+                ];
+
+
+            button.style.transform =
+                `translate(
+                    ${(Math.random() - 0.5) * 30}px,
+                    ${(Math.random() - 0.5) * 15}px
+                )`;
+
+        }
+
+
+        /* =========================
+           HEART EXPLOSION
+        ========================= */
+
+        function createHeartExplosion() {
+
+            const emojis = [
+                "❤️",
+                "💕",
+                "💗",
+                "💖",
+                "✨"
+            ];
+
+
+            for (let i = 0; i < 80; i++) {
+
+                const heart =
+                    document.createElement("span");
+
+
+                heart.innerText =
+                    emojis[
+                        Math.floor(
+                            Math.random() *
+                            emojis.length
+                        )
+                    ];
+
+
+                heart.style.position = "fixed";
+
+                heart.style.left =
+                    Math.random() * 100 + "vw";
+
+                heart.style.top =
+                    Math.random() * 100 + "vh";
+
+                heart.style.fontSize =
+                    15 + Math.random() * 25 + "px";
+
+                heart.style.zIndex = "10";
+
+                heart.style.pointerEvents =
+                    "none";
+
+                heart.style.animation =
+                    "fade 1.5s ease forwards";
+
+
+                document.body.appendChild(
+                    heart
+                );
+
+
+                setTimeout(() => {
+
+                    heart.remove();
+
+                }, 1600);
+
+            }
+
+        }
+
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>One Last Question ❤️</title>
+
+    <link rel="stylesheet" href="style.css">
+
+    <style>
+
+        .choice-area {
+            position: relative;
+
+            width: 100%;
+            height: 150px;
+
+            margin-top: 25px;
+        }
+
+        .choice-area button {
+            position: absolute;
+        }
+
+        #yesButton {
+            left: 50%;
+            transform: translateX(-110%);
+        }
+
+        #timeButton {
+            left: 50%;
+            transform: translateX(10%);
+
+            transition: left 0.25s ease,
+                        top 0.25s ease;
+        }
+
+        @media (max-width: 600px) {
+
+            .choice-area {
+                height: 180px;
+            }
+
+            #yesButton {
+                left: 50%;
+                top: 10px;
+
+                transform: translateX(-50%);
+            }
+
+            #timeButton {
+                left: 50%;
+                top: 85px;
+
+                transform: translateX(-50%);
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+<div class="container">
+
+    <div class="card" id="card">
+
+        <div class="heart">
+            ❤️
+        </div>
+
+
+        <h1>
+            One last <span>question...</span>
+        </h1>
+
+
+        <div class="message">
+
+            We've looked at the memories.
+
+            <br><br>
+
+            You've answered my questions.
+
+            <br><br>
+
+            And now there is only one thing
+            I really want to ask you.
+
+        </div>
+
+
+        <h2>
+            Can we start again?
+        </h2>
+
+
+        <p>
+
+            Not exactly where we left off.
+
+            <br>
+
+            But from a new beginning.
+
+            <br>
+
+            Slower. Better. Together. ❤️
+
+        </p>
+
+
+        <div class="choice-area">
+
+            <!-- YES BUTTON -->
+
+            <button
+                id="yesButton"
+                onclick="yesClicked()">
+
+                Yes... let's try again ❤️
+
+            </button>
+
+
+            <!-- RUNNING BUTTON -->
+
+            <button
+                id="timeButton"
+                class="secondary">
+
+                I need more time 🌷
+
+            </button>
+
+        </div>
+
+
+        <p id="response"></p>
+
+    </div>
+
+</div>
+
+
+<script>
+
+    const timeButton =
+        document.getElementById("timeButton");
+
+
+    const choiceArea =
+        document.querySelector(".choice-area");
+
+
+    /*
+        Desktop:
+        Move the button when mouse gets close.
+
+        Mobile:
+        Move the button when touched.
+    */
+
+
+    function moveButton() {
+
+        const areaWidth =
+            choiceArea.clientWidth;
+
+        const areaHeight =
+            choiceArea.clientHeight;
+
+
+        const buttonWidth =
+            timeButton.offsetWidth;
+
+        const buttonHeight =
+            timeButton.offsetHeight;
+
+
+        const maxX =
+            areaWidth - buttonWidth;
+
+        const maxY =
+            areaHeight - buttonHeight;
+
+
+        const randomX =
+            Math.random() * maxX;
+
+        const randomY =
+            Math.random() * maxY;
+
+
+        timeButton.style.left =
+            randomX + "px";
+
+        timeButton.style.top =
+            randomY + "px";
+
+        timeButton.style.transform =
+            "none";
+
+    }
+
+
+    /*
+        Desktop hover
+    */
+
+    timeButton.addEventListener(
+        "mouseenter",
+        moveButton
+    );
+
+
+    /*
+        Mobile touch
+    */
+
+    timeButton.addEventListener(
+        "touchstart",
+        function(event) {
+
+            event.preventDefault();
+
+            moveButton();
+
+        }
+    );
+
+
+    /*
+        If somehow clicked
+    */
+
+    timeButton.addEventListener(
+        "click",
+        function(event) {
+
+            event.preventDefault();
+
+            moveButton();
+
+        }
+    );
+
+
+    /*
+        YES BUTTON
+    */
+
+    function yesClicked() {
+
+        document.getElementById("card").innerHTML = `
+
+            <div class="heart">
+                💗
+            </div>
+
+            <h1>
+                Then... <span>let's begin again.</span>
+            </h1>
+
+            <div class="message">
+
+                No going back.
+
+                <br><br>
+
+                No pretending the past never happened.
+
+                <br><br>
+
+                Just two people choosing to understand
+                each other a little better.
+
+                <br><br>
+
+                One conversation at a time.
+
+                <br>
+
+                One day at a time.
+
+                <br><br>
+
+                <strong>
+                    Maybe our next chapter can be
+                    better than our last. ❤️
+                </strong>
+
+            </div>
+
+            <div class="heart">
+                🫶
+            </div>
+
+        `;
+
+
+        createHearts();
+
+    }
+
+
+    /*
+        Heart celebration
+    */
+
+    function createHearts() {
+
+        const emojis = [
+            "❤️",
+            "💕",
+            "💗",
+            "💖",
+            "✨",
+            "🫶"
+        ];
+
+
+        for (let i = 0; i < 80; i++) {
+
+            const heart =
+                document.createElement("span");
+
+
+            heart.innerText =
+                emojis[
+                    Math.floor(
+                        Math.random() *
+                        emojis.length
+                    )
+                ];
+
+
+            heart.style.position =
+                "fixed";
+
+
+            heart.style.left =
+                Math.random() * 100 + "vw";
+
+
+            heart.style.top =
+                Math.random() * 100 + "vh";
+
+
+            heart.style.fontSize =
+                15 + Math.random() * 25 + "px";
+
+
+            heart.style.zIndex = "10";
+
+
+            heart.style.pointerEvents =
+                "none";
+
+
+            heart.style.animation =
+                "fade 1.5s ease forwards";
+
+
+            document.body.appendChild(
+                heart
+            );
+
+
+            setTimeout(() => {
+
+                heart.remove();
+
+            }, 1600);
+
+        }
+
+    }
+
+</script>
+
+</body>
+
+</html>
